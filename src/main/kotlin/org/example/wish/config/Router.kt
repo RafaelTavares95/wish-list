@@ -15,6 +15,9 @@ class Router : KoinComponent {
             path("wishes"){
                 post(wishController::create)
                 get(wishController::getWishes)
+                path(":wish-id"){
+                    put(wishController::update)
+                }
             }
         }
 

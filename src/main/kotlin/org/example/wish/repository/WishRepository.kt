@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.standalone.KoinComponent
 
 private object WishSchema : LongIdTable("wish"){
-    //val id = long("id").autoIncrement().primaryKey()
     val name =  varchar("name", 255).nullable()
     val description = varchar("description", 255).nullable()
     val link = varchar("link", 255).nullable()
@@ -27,6 +26,7 @@ fun ResultRow.toWish(): Wish = Wish(
 
 interface WishRepository{
     fun save(wish: Wish): Wish
+    fun update(id:Long, wish: Wish): Wish
     fun listAll(): List<Wish>
 }
 
@@ -47,6 +47,10 @@ class WishRepositoryImpl: WishRepository, KoinComponent {
             it[date] = wish.date
         }
         wish.copy(id = result[WishSchema.id].value)
+    }
+
+    override fun update(id: Long, wish: Wish): Wish {
+        TODO("Not yet implemented")
     }
 
     override fun listAll(): List<Wish> = transaction {

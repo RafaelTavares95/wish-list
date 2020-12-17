@@ -17,6 +17,17 @@ class WishController : KoinComponent{
         }
     }
 
+    fun update(ctx: Context){
+        ctx.pathParam("wish-id").toLongOrNull().also { id ->
+            ctx.bodyAsClass(Wish::class.java).let {
+                ctx.status(HttpStatus.OK_200)
+                if (id != null) {
+                    wishService.update(id, it)
+                }
+            }
+        }
+    }
+
     fun getWishes(ctx: Context){
        ctx.json(wishService.listAll())
     }
